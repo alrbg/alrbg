@@ -113,3 +113,33 @@ footer {
 .btn:hover {
     background: #084298;
 }
+
+.projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.project-card {
+    background: #f1f1f1;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.project-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+.project-card h3 {
+    color: #0d6efd;
+    margin-bottom: 8px;
+}
+
+.project-card .btn {
+    margin-top: 10px;
+}
