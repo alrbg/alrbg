@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Be My Valentine 💌</title>
+    <style>
+        body {
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            font-family: "Comic Sans MS", Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .box {
+            text-align: center;
+            background: white;
+            padding: 40px 50px;
+            border-radius: 25px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            z-index: 2;
+            min-width: 320px;
+        }
+
+        h1 {
+            color: #e91e63;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            padding: 12px;
+            font-size: 18px;
+            border-radius: 10px;
+            border: 2px solid #f8bbd0;
+            width: 80%;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        button {
+            padding: 14px 30px;
+            font-size: 20px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        #yes {
+            background: #4caf50;
+            color: white;
+        }
+
+        #no {
+            background: #f44336;
+            color: white;
+            position: absolute;
+            transition: left 0.05s, top 0.05s;
+        }
+
+        #result {
+            display: none;
+            font-size: 24px;
+            color: #e91e63;
+            margin-top: 15px;
+        }
+
+        /* Kissing GIF */
+        #kissGif {
+            display: none;
+            width: 220px;
+            margin: 20px auto 0;
+            border-radius: 15px;
+        }
+
+        /* Floating hearts */
+        .heart {
+            position: absolute;
+            bottom: -20px;
+            font-size: 24px;
+            animation: floatUp 6s linear infinite;
+            opacity: 0.8;
+        }
+
+        @keyframes floatUp {
+            to {
+                transform: translateY(-110vh) scale(1.5);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Background music 🎵 -->
+<audio id="bgMusic" loop>
+    <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<div class="box">
+    <h1 id="question">Will you be my Valentine? 💖🥺</h1>
+
+    <input type="text" id="nameInput" placeholder="Enter your name 💕">
+
+    <div id="buttons">
+        <button id="yes" onclick="sayYes()">Yes 💕</button>
+        <button id="no">No 😝</button>
+    </div>
+
+    <div id="result"></div>
+
+    <!-- Kissing GIF 💋 -->
+    <img id="kissGif" src="kiss.gif" alt="Kissing gif 💋">
+</div>
+
+<script>
+    const noBtn = document.getElementById("no");
+    const music = document.getElementById("bgMusic");
+
+    // Special name & message
+    const specialNames = {
+        "Abhimanyu L R": "Abhimanyu L R 💖, you’re the reason my heart smiles every day 🥰🌹",
+        "Abhimanyu L R": "Abhimanyu L R 💘, you make every moment magical 💫💖",
+        "Abhimanyu L R": "Abhimanyu L R 💕, my Valentine, forever and always 🌹✨"
+    };
+
+    // SUPER FAST No button 😈
+    function moveNoButton() {
+        const x = Math.random() * (window.innerWidth - 150);
+        const y = Math.random() * (window.innerHeight - 80);
+        noBtn.style.left = x + "px";
+        noBtn.style.top = y + "px";
+    }
+
+    noBtn.addEventListener("mouseover", moveNoButton);
+    noBtn.addEventListener("mousemove", moveNoButton);
+
+    let heartsInterval; // interval handle for hearts
+
+    function sayYes() {
+        const name = document.getElementById("nameInput").value.trim();
+        if (!name) {
+            alert("Please enter your name 💕");
+            return;
+        }
+
+        music.play();
+
+        document.getElementById("question").style.display = "none";
+        document.getElementById("buttons").style.display = "none";
+        document.getElementById("nameInput").style.display = "none";
+
+        const result = document.getElementById("result");
+
+        // Check for special name
+        const key = Object.keys(specialNames).find(k => k.toLowerCase() === name.toLowerCase());
+        if (key) {
+            result.innerHTML = specialNames[key] + " 💘✨";
+        } else {
+            result.innerHTML = `Yayyy ${name}! 🥰💘<br>You just made my Valentine’s Day special 🌹✨`;
+        }
+
+        result.style.display = "block";
+        document.getElementById("kissGif").style.display = "block";
+
+        // Start floating hearts AFTER Yes click
+        heartsInterval = setInterval(createHeart, 250);
+    }
+
+    // Floating hearts 💕
+    const hearts = ["💖", "💕", "💘", "❤️", "💗"];
+    function createHeart() {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerText = hearts[Math.floor(Math.random() * hearts.length)];
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 7000);
+    }
+
+    // **Note:** Previously there was setInterval(createHeart, 250) outside; remove it!
+</script>
+</body>
+</html>
